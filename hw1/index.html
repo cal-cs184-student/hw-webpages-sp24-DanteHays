@@ -41,10 +41,9 @@
 		
 		<p><b>Task 5:</b></p>
 
-		<p>Pixel sampling can be used to map a texture map to a new image. 
-			It can be used to distort images and cause twists in them, for example. 
+		<p>Pixel sampling is picking pixels based off of an index, typically modulated away from the current drawing, otherwise you would render the same thing. In this case, it is a way to map a 2D texture to a 3D space. Or it can be used to manipulate images in 2D and cause twists in them, for example. 
 			Basically, when you know the coordinates of a triangle in your picture and the coordinates of the respective triangle in a texture, you can "copy" the triangle over while allowing the triangle shape to change (hence the distortions). 
-			I utilized the Barycentric coordinates from task 4 to find the ratios of where each pixel is to the points on the triangle in my picture. 
+			I utilized the Barycentric coordinates from task 4 to find the ratios (proportional distances) of where each pixel is to the points on the triangle in my picture. 
 			Then, I used the ratios to find the location of the "equivalent" pixel on the texture map by combining the ratios with the texture map traingle point coordinates. Then, I was able to find the correct color (2 ways to do this, nearest and bilinear) from the texture map and place it into the buffer. The rest of the process remains the same.
 			There are two types of pixel sampling methods (nearest and bilinear). 
 			The x and y value found after finding the equivalent point on the texture map is typically not an integer. 
@@ -53,5 +52,17 @@
 			Then the bottom two and top two colors are linearly interpolated in the horizontal direction given the actual x value. Finally, these two interpolated colors are interpolated once more in the vertical direction based off of the actual y value. This is the color placed in the buffer.</p>
 		
 		<p><b>Task 6:</b></p>
+
+		<p>Level sampling is when you pick a level or couple levels in a mipmap to pull your color from. 
+			Mip maps are a powerful preprocessing tool where each level up you go, the resolution of the image goes down. 
+			This allows for nice averaging when pulling from a texture map and removes from high frequency changes. 
+			In this case, level sampling was used to improve the texture mapping. There are three types, zero, nearest, and linear. 
+			When using the zero version, you pull the color from the 0th level, having nothing change from task 5. 
+			For the nearest version, an ideal level can be found by finding the barycentric coordinates of the pixels to the right and above the original pixel. 
+			Then, the length of the difference can be found and the level is the log2 of that. 
+			Finally, it is rounded to the nearest integer. Effectively, the rate of change determines how much averaging should be going on there. 
+			Once the level is found, then the color can be pulled in the same way as task 5, but on this new level. 
+			In the linear version, instead of being rounded, it is floored and ceiling-ed. The colors are pulled from both levels and then linearly interpolated based off of the original level value.  </p>
+		<p>When taking one sample per pixel with nearest pixel sampling and zero-th level level sampling, the speed is the fastest and it uses the least memory. However, this is the most pixelated version and it typically is very jagged. When you incrase the number of sampled per pixel the speed and memory gets worse, but the pictures look a lot more fluid, especially on the edges. When the pixel sampling is done bilinearly, the speed and memory gets worse but only slightly. This allows for more fluid and clear shapes in the middle of the picture. When using nearest and linear level sampling, the speed and memory needed gets worse yet again, and in this case it almost seemed too blurry. When I zoomed in significantly, however, this mode looked the best. Overall, increasing the number of samples per pixel and using bilinear pixel sampling had the best antialiasing effects.</p>
 	</body>
 </html>
