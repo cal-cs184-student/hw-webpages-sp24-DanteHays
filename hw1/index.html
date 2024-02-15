@@ -10,9 +10,16 @@
 		<p><b>Task 1:</b></p>
 		<p>The first part of this homework assignment was rasterizing triangles without texture mapping. 
 			I was given the x and y coordinates of the three points in each triangle, as well as the color, and had to fill a buffer with all of the pixels to draw it. 
-			My algorithm begins by finding the minimum and maximum x and y values of the surround box around the triangle (so I'm not checking every pixel on the screen). 
+			My algorithm begins by finding the minimum and maximum x and y values of the surrounding box around the triangle (so I'm not checking every pixel on the screen). 
 			Once these coordinates are found, the algorithm iterates through each pixel in the box and uses "three line tests" to determine if the pixel is in the triangle. 
-			Each line test is done on one of the sides of the triangle, and it returns positive if the pixel is above the line and negative if the pixel is below the line. 
-			This math only works when the points of the triangle and given in counter-clockwise orientation, however, so if the cross product of two of the lines is negative, I flip the order of the triangle points, and then run the line tests.</p>
+			Each line test is done on one of the sides of the triangle, and it finds the equation for the normal vector to each line and takes a dot product of the normal vector and the vector to the pixel.
+			It returns positive if the pixel is above the line and negative if the pixel is below the line.
+			If all three lines return a positive value, then the point is inside the triangle, and I add the color to the respective index in the buffer.
+			This math only works when the points of the triangle are given in counter-clockwise orientation, however, so if the cross product of two of the lines is negative, I flip the order of the triangle points, and then run the line tests. 
+			Before I realized this, only the counter-clockwise constructed triangles rendered properly. I also noticed that instead of taking the cross proudct, you could just test if the line tests return all positive or all negative. 
+			If drawn in the counter-clockwise way, then it would return all positive. But, if drawn in the clockwise way, the normal vectors and dot product flip, so it would all negative. 
+			Which is equivalent to swaping the points and having it return all positive. </p>
+		<p>If I didn't find the bounding box of the triangle, my algorithm would run significantly slower, as it would be running line tests for every pixel on the screen for each triangle. 
+			Each pixel would get tested n number of times, where n is the number of pixels on the screen. Now, they only get tested a handful of times each, depending on where the bounding boxes are per picture.</p>
 	</body>
 </html>
