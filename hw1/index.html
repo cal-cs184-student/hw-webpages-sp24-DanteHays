@@ -4,10 +4,9 @@
 	<body>
 		Website: https://cal-cs184-student.github.io/hw-webpages-sp24-DanteHays/
 		
-		<p> test lol idk</p>
-		<p>test 2 lol haha</p>
 
 		<p><b>Task 1:</b></p>
+		
 		<p>The first part of this homework assignment was rasterizing triangles without texture mapping. 
 			I was given the x and y coordinates of the three points in each triangle, as well as the color, and had to fill a buffer with all of the pixels to draw it. 
 			My algorithm begins by finding the minimum and maximum x and y values of the surrounding box around the triangle (so I'm not checking every pixel on the screen). 
@@ -21,5 +20,26 @@
 			Which is equivalent to swaping the points and having it return all positive. </p>
 		<p>If I didn't find the bounding box of the triangle, my algorithm would run significantly slower, as it would be running line tests for every pixel on the screen for each triangle. 
 			Each pixel would get tested n number of times, where n is the number of pixels on the screen. Now, they only get tested a handful of times each, depending on where the bounding boxes are per picture.</p>
+
+		<p><b>Task 2:</b></p>
+		
+		<p>To implement supersampling, I built off of task 1. 
+			As I iterate through each pixel, I split the pixel up into "subpixels". 
+			The sample rate determines how many subpixels there are. 
+			I iterate through each subpixel and find the location of the new subpixel coordinates. 
+			Then, I run the line tests on each subpixel for each pixel in the bounding triangle box. 
+			The buffer has to be resized whenever the sample rate changes, as it keeps track of all of the subpixels colors. 
+			Then, once the buffer has been filled and the screen is actually rendered, I average the values of the subpixels for each pixel. 
+			Supersampling is used to smooth out edges and make lines look straight instead of jaggy. 
+			This change is especially noticable on the edges of the picture when it isn't a vertical or horizontal line. 
+			By averaging, the pixels that are partly in the triangle and partly not get placed at a lighter color than one that's fully in, making the edges look smooth. </p>
+		
+		<p><b>Task 3:</b></p>
+		<p><b>Task 4:</b></p>
+
+		<p> </p>
+		
+		<p><b>Task 5:</b></p>
+		<p><b>Task 6:</b></p>
 	</body>
 </html>
