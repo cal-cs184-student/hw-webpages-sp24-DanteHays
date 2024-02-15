@@ -2,8 +2,17 @@
 	<head>
 	</head>
 	<body>
-		Homework 1 index.html here
+		Website: https://cal-cs184-student.github.io/hw-webpages-sp24-DanteHays/
+		
 		<p> test lol idk</p>
 		<p>test 2 lol haha</p>
+
+		<p><b>Task 1:</b></p>
+		<p>The first part of this homework assignment was rasterizing triangles without texture mapping. 
+			I was given the x and y coordinates of the three points in each triangle, as well as the color, and had to fill a buffer with all of the pixels to draw it. 
+			My algorithm begins by finding the minimum and maximum x and y values of the surround box around the triangle (so I'm not checking every pixel on the screen). 
+			Once these coordinates are found, the algorithm iterates through each pixel in the box and uses "three line tests" to determine if the pixel is in the triangle. 
+			Each line test is done on one of the sides of the triangle, and it returns positive if the pixel is above the line and negative if the pixel is below the line. 
+			This math only works when the points of the triangle and given in counter-clockwise orientation, however, so if the cross product of two of the lines is negative, I flip the order of the triangle points, and then run the line tests.</p>
 	</body>
 </html>
