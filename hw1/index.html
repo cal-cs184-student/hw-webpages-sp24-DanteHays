@@ -20,6 +20,7 @@
 			Which is equivalent to swaping the points and having it return all positive. </p>
 		<p>If I didn't find the bounding box of the triangle, my algorithm would run significantly slower, as it would be running line tests for every pixel on the screen for each triangle. 
 			Each pixel would get tested n number of times, where n is the number of pixels on the screen. Now, they only get tested a handful of times each, depending on where the bounding boxes are per picture.</p>
+		<img src="./images/test4.png">
 
 		<p><b>Task 2:</b></p>
 		
@@ -33,6 +34,14 @@
 			Supersampling is used to smooth out edges and make lines look straight instead of jaggy. 
 			This change is especially noticable on the edges of the picture when it isn't a vertical or horizontal line. 
 			By averaging, the pixels that are partly in the triangle and partly not get placed at a lighter color than one that's fully in, making the edges look smooth. </p>
+
+		<table>
+			<tr>
+				<td><img src="./images/test4-1.png"></td>
+				<td><img src="./images/test4-4.png"></td>
+				<td><img src="./images/test4-16.png"></td>
+			</tr>
+		</table>
 		
 		<p><b>Task 3:</b></p>
 
