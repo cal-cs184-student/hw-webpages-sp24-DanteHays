@@ -51,7 +51,7 @@
 		
 		<p><b>Task 4:</b></p>
 
-		<p> </p>
+		<p>Using barycentric coordinates gives you ratios or proportional distances to each vertex on the triangle. These ratios can then be used to interpolate colors across the triangle when given the colors at the vertexes. Or, it could be used to map textures from a differently scaled triangle. </p>
 
 		<img src="./images/test7.png">
 		
@@ -75,6 +75,8 @@
 				<td><img src="./images/texb16.png"></td>
 			</tr>
 		</table>
+
+		<p>Using nearest sampling and 1 sample per pixel easily creates the worst drawn picture. Increasing the sample rate to 16 per pixel smoothes out all of the edges and makes the picture higher quality and easier to read. Using bilinear sampling with 1 sample per pixel doesn't smooth the edges out as well (still does quite a bit), but it maintains more of the white lines. The high sample rate with nearest made some of the letters turn less white. Using bilinear and 16 samples per pixel created the best picture. There isn't much of a difference between nearest and bilinear when at 16 samples per picture, presumably because the high sample rate can somewhat "replicate" the same effect as the biliear sampling. The largest differences happen between nearest with 1 to nearest with 16, as well as, nearest with 1 to bilinear with 1. The difference between no antialiasing and smoothing to some is significnatly larger than from some to a lot. </p>
 		
 		<p><b>Task 6:</b></p>
 
@@ -89,5 +91,18 @@
 			Once the level is found, then the color can be pulled in the same way as task 5, but on this new level. 
 			In the linear version, instead of being rounded, it is floored and ceiling-ed. The colors are pulled from both levels and then linearly interpolated based off of the original level value.  </p>
 		<p>When taking one sample per pixel with nearest pixel sampling and zero-th level level sampling, the speed is the fastest and it uses the least memory. However, this is the most pixelated version and it typically is very jagged. When you increase the number of samples per pixel, the speed and memory gets worse, but the pictures look a lot more fluid, especially on the edges. When the pixel sampling is done bilinearly, the speed and memory gets worse but only slightly. This allows for more fluid and clear shapes in the middle of the picture. When using nearest and linear level sampling, the speed and memory needed gets worse yet again, and in this case it almost seemed too blurry. When I zoomed in significantly, however, this mode looked the best. Overall, increasing the number of samples per pixel and using bilinear pixel sampling had the best antialiasing effects.</p>
+
+		<table>
+			<tr>
+				<td><img src="./images/zn.png"></td>
+				<td><img src="./images/zl.png"></td>
+				<td><img src="./images/ln.png"></td>
+				<td><img src="./images/nl.png"></td>
+			</tr>
+		</table>
+
+		<p>Looking at these pictures, the farther right you go, the better the edges smooth into the black. Also, the midle of the shell looks less rigid and complete complete.</p>
+
+		
 	</body>
 </html>
