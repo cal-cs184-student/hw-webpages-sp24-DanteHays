@@ -35,13 +35,11 @@
 			This change is especially noticable on the edges of the picture when it isn't a vertical or horizontal line. 
 			By averaging, the pixels that are partly in the triangle and partly not get placed at a lighter color than one that's fully in, making the edges look smooth. </p>
 
-		<table>
-			<tr>
-				<td><img src="./images/test4-1.png"></td>
-				<td><img src="./images/test4-4.png"></td>
-				<td><img src="./images/test4-16.png"></td>
-			</tr>
-		</table>
+		
+			<img src="./images/test4-1.png">
+			<img src="./images/test4-4.png">
+			<img src="./images/test4-16.png">
+			
 		
 		<p><b><u>Task 3:</u></b></p>
 
@@ -71,14 +69,12 @@
 			However, bilinear pixel sampling is slightly more difficult. In this case, the colors of the four pixels on the texture map that surround the x and y coordinates are found. 
 			Then the bottom two and top two colors are linearly interpolated in the horizontal direction given the actual x value. Finally, these two interpolated colors are interpolated once more in the vertical direction based off of the actual y value. This is the color placed in the buffer.</p>
 
-		<table>
-			<tr>
-				<td><img src="./images/texn1.png"></td>
-				<td><img src="./images/texn16.png"></td>
-				<td><img src="./images/texb1.png"></td>
-				<td><img src="./images/texb16.png"></td>
-			</tr>
-		</table>
+		
+			<img src="./images/texn1.png">
+			<img src="./images/texn16.png">
+			<img src="./images/texb1.png">
+			<img src="./images/texb16.png">
+			
 
 		<p>Using nearest sampling and 1 sample per pixel easily creates the worst drawn picture. Increasing the sample rate to 16 per pixel smoothes out all of the edges and makes the picture higher quality and easier to read. Using bilinear sampling with 1 sample per pixel doesn't smooth the edges out as well (still does quite a bit), but it maintains more of the white lines. The high sample rate with nearest made some of the letters turn less white. Using bilinear and 16 samples per pixel created the best picture. There isn't much of a difference between nearest and bilinear when at 16 samples per picture, presumably because the high sample rate can somewhat "replicate" the same effect as the biliear sampling. The largest differences happen between nearest with 1 to nearest with 16, as well as, nearest with 1 to bilinear with 1. The difference between no antialiasing and smoothing to some is significnatly larger than from some to a lot. </p>
 		
@@ -96,14 +92,12 @@
 			In the linear version, instead of being rounded, it is floored and ceiling-ed. The colors are pulled from both levels and then linearly interpolated based off of the original level value.  </p>
 		<p>When taking one sample per pixel with nearest pixel sampling and zero-th level level sampling, the speed is the fastest and it uses the least memory. However, this is the most pixelated version and it typically is very jagged. When you increase the number of samples per pixel, the speed and memory gets worse, but the pictures look a lot more fluid, especially on the edges. When the pixel sampling is done bilinearly, the speed and memory gets worse but only slightly. This allows for more fluid and clear shapes in the middle of the picture. When using nearest and linear level sampling, the speed and memory needed gets worse yet again, and in this case it almost seemed too blurry. When I zoomed in significantly, however, this mode looked the best. Overall, increasing the number of samples per pixel and using bilinear pixel sampling had the best antialiasing effects.</p>
 
-		<table>
-			<tr>
-				<td><img src="./images/zn.png"></td>
-				<td><img src="./images/zl.png"></td>
-				<td><img src="./images/ln.png"></td>
-				<td><img src="./images/nl.png"></td>
-			</tr>
-		</table>
+	
+			<img src="./images/zn.png">
+			<img src="./images/zl.png">
+			<img src="./images/ln.png">
+			<img src="./images/nl.png">
+		
 
 		<p>Looking at these pictures, the farther right you go, the better the edges smooth into the black. Also, the midle of the shell looks less rigid and more complete.</p>
 
