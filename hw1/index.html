@@ -35,7 +35,7 @@
 			Then, once the buffer has been filled and the screen is actually rendered, I average the values of the subpixels for each pixel. 
 			Supersampling is used to smooth out edges and make lines look straight instead of jaggy. 
 			This change is especially noticable on the edges of the picture when it isn't a vertical or horizontal line. 
-			By averaging, the pixels that are partly in the triangle and partly not get placed at a lighter color than one that's fully in, making the edges look smooth. </p>
+			By averaging, the pixels that are partly in the triangle and partly not get placed at a lighter color than one that's fully in, making the edges look smooth. In super tight angles, like below, only a few lucky pixels get rendered. Once the sampling rate increases, the subpixels that are within the triangle raise the average color, filling out the triangle nicely. </p>
 
 		
 			<img src="./images/test4-1.png">
