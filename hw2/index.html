@@ -2,6 +2,38 @@
 	<head>
 	</head>
 	<body>
-		Homework 2 index.html here
+		Website: https://cal-cs184-student.github.io/hw-webpages-sp24-DanteHays/
+
+		<p></p>
+
+		<p><b><u>Task 1:</u></b></p>
+		
+		<p>De Casteljau's algorithm is a recursive algorithm that can be used to generate bezier curves, which are used in font design and animation due to their smooth and satisfying nature. The algorithm works by starting with a set of control points that influence the output curve. Then, the algorithm recursively determines more points using linear interpolation between control points that are next to each other. These additional points are all generated using the same ratio between the two control points. This is done yet again on the additional points that were generated. For example, if you begin with four control points, the algorithm finds three intermediate points between them. Then, it finds two intermediate points between those. Finally, it finds one point between those, which is a point on the bezier curve. To generate the full curve, this is done repeatedly evaluated where the ratio used in the linear interpolation varies between 0 and 1.</p>
+		<p>I implemented this algorithm by creating a function that does one step of the algorithm each time it's called. For example, if you pass in 4 control points, it will return the 3 intermediate points. To do this, I iterate through each pair of adjacent control points and calculate the location of the new point at a specific ratio.</p>
+
+		
+
+		<p><b><u>Task 2:</u></b></p>
+		
+		<p>De Casteljau's algorithm can also be used to generate bezier surfaces. Instead of having control points that lie on some plane, they are in a three dimensional grid. Now, to find a point on the bezier surface, two ratios are needed; one for each axis that the algorithm will be run on. This means that all of the vectors of control points along one of the axis will be recursively linearly interpolated (Task 1 done on each of the vectors of control points). Each vector of points returns a singular point after this, but because there are mutliple original vectors, this results in a singular vector of points along the other axis. Then De Casteljau's algorithm can be used again along this set of points to find the final point on the surface. Then, similarly to task 1, this is done for every set of ratios ranging from 0 to 1 in both directions to find the full bezier surface.</p>
+			
+		
+		<p><b><u>Task 3:</u></b></p>
+
+		<p></p>
+		
+		<p><b><u>Task 4:</u></b></p>
+
+		<p>In this task, I found a way to flip an edge in a triangle mesh. The mesh utilizes the HalfedgeMesh class, which keeps track of edges, vertices, faces, and halfedges (one side of an edge). This class makes it easy to search around a mesh and make changes, like flipping an edge. To flip an edge, I created a function that takes in the edge that needs to be flipped and finds all of the vertices, edges, halfedges, and faces in the two triangles that share the original edge. Then, I went through each half edge and reassigned the vertex, edge, face, and other half edges (the next one in the triangle and the opposite one on the same edge) that are adjacent after the flip. I also went through every vertex, face, and edge and reassigned the halfedge that each one points to after the flip. By manipulating the pointers in the mesh, the edge is flipped. I expected to need some thorough debugging for this task, but surprisingly, it worked on my first attempt!</p>
+		
+		<p><b><u>Task 5:</u></b></p>
+
+		<p>In this task, I found a way to split an edge in a triangle mesh. In other words, for a specific edge, my algorithm finds the midpoint, creates a vertex at the midpoint, splits the edge into two that connect at the midpoint, and adds two more edges that connect from the midpoint to the opposite vertices of the two triangles that share the original edge. I implemented this in a similar way to how I flipped an edge. I began by finding all of the vertices, edges, halfedges, and faces in the two triangles that share the original edge. Then I create the new edges, halfedges, vertices, and faces that show up after splitting the edge. Finally, I reassign the pointers for all of the objects in that portion of the mesh in a way that splits the edge. I went through every halfedge, including the new ones, and reassigned the vertex, face, edge, next halfedge, and opposite half edge that the halfedge points to after the split. I also went through every vertex, face, and edge and reassigned the halfedge to the one they point to after the split. This is not that much harder than flipping an edge; you just have to reassign pointers. Like task 4, I expected needing to debug this, but surprisingly, it worked on my first attempt!</p>
+			<img src="./images/texn1.png">
+		
+		<p><b><u>Task 6:</u></b></p>
+
+		<p></p>
+		
 	</body>
 </html>
