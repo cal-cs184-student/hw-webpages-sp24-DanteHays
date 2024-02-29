@@ -20,7 +20,7 @@
 		
 		<p><b><u>Task 3:</u></b></p>
 
-		<p></p>
+		<p>In this task I calculated area-weighted vertex normals to use Phong shading as opposed to flat shading. This causes the shading texture to look much smoother, instead of having sharp changes at the edges of the triangles. To find the area-weighted normal vector at a specific vertex, I iterated through the faces that touch the vertex and calculated their areas by taking a cross product of two of the triangle vectors, normalizing it, and multiplying it by 1/2. Then, I multiplied the normal vector (the cross product result) by the area. Next, all of these values for the different faces that surround the original vertex are summed. Finally, this sum is normalized, giving us our area-weighted vertex normal for the original vertex. </p>
 		
 		<p><b><u>Task 4:</u></b></p>
 
