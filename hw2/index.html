@@ -20,7 +20,7 @@
 		<img src="./images/p1_6.PNG">
 		<img src="./images/p1_7.PNG">
 
-		<p>To show how the curve changes, I moved some of the control points:</p>
+		<p>To show how the curve changes, I moved some of the control points. I also changed the ratio to show how it finds a different point on the curve:</p>
 		
 		<img src="./images/p1_n.PNG">
 
@@ -45,11 +45,33 @@
 		<p><b><u>Task 4:</u></b></p>
 
 		<p>In this task, I found a way to flip an edge in a triangle mesh. The mesh utilizes the HalfedgeMesh class, which keeps track of edges, vertices, faces, and halfedges (one side of an edge). This class makes it easy to search around a mesh and make changes, like flipping an edge. To flip an edge, I created a function that takes in the edge that needs to be flipped and finds all of the vertices, edges, halfedges, and faces in the two triangles that share the original edge. Then, I went through each half edge and reassigned the vertex, edge, face, and other half edges (the next one in the triangle and the opposite one on the same edge) that are adjacent after the flip. I also went through every vertex, face, and edge and reassigned the halfedge that each one points to after the flip. By manipulating the pointers in the mesh, the edge is flipped. I expected to need some thorough debugging for this task, but surprisingly, it worked on my first attempt!</p>
+		<p>Here is an untouched mesh:</p>
+		
+		<img src="./images/p4_1.PNG">
+
+		<p>Here is the same mesh after I have flipped some of the edges:</p>
+		
+		<img src="./images/p4_2.PNG">
 		
 		<p><b><u>Task 5:</u></b></p>
 
 		<p>In this task, I found a way to split an edge in a triangle mesh. In other words, for a specific edge, my algorithm finds the midpoint, creates a vertex at the midpoint, splits the edge into two that connect at the midpoint, and adds two more edges that connect from the midpoint to the opposite vertices of the two triangles that share the original edge. I implemented this in a similar way to how I flipped an edge. I began by finding all of the vertices, edges, halfedges, and faces in the two triangles that share the original edge. Then I create the new edges, halfedges, vertices, and faces that show up after splitting the edge. Finally, I reassign the pointers for all of the objects in that portion of the mesh in a way that splits the edge. I went through every halfedge, including the new ones, and reassigned the vertex, face, edge, next halfedge, and opposite half edge that the halfedge points to after the split. I also went through every vertex, face, and edge and reassigned the halfedge to the one they point to after the split. This is not that much harder than flipping an edge; you just have to reassign pointers. Like task 4, I expected needing to debug this, but surprisingly, it worked on my first attempt!</p>
-			
+
+		<p>Here is an untouched mesh:</p>
+		
+		<img src="./images/p5_1.PNG">
+
+		<p>Here is the same mesh after I have split some of the edges:</p>
+		
+		<img src="./images/p5_2.PNG">
+
+		<p>Here is another untouched mesh:</p>
+		
+		<img src="./images/p5_3.PNG">
+		
+		<p>Here is the same mesh after I have split and flipped some of the edges:</p>
+		
+		<img src="./images/p5_4.PNG">
 		
 		<p><b><u>Task 6:</u></b></p>
 
