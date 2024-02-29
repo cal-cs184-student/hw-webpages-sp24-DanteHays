@@ -4,7 +4,7 @@
 	<body>
 		Website: https://cal-cs184-student.github.io/hw-webpages-sp24-DanteHays/
 
-		<p></p>
+		<p>Throughout this homework, I used Bezier curves (and then surfaces) to generate smooth meshes. This allows objects to more easily look round as opposed to blocky. In the latter half of the homework, I was manipulating triangle meshes. By creating edge flip and then edge split functions, I was able to make an algorithm that can upsample triangle meshes. This can be used to increase the quality of an object being rendered, at the cost of more space being needed.</p>
 
 		<p><b><u>Task 1:</u></b></p>
 		
@@ -76,6 +76,31 @@
 		<p><b><u>Task 6:</u></b></p>
 
 		<p>I implemented loop subdivision for upsampling the triangle meshes. To do this, I began by iterating through all of the existing vertices and calculating their positions after the upsample. The new position is calculated with a weighted average based on surrounding vertex positions in the original mesh. I didn't immediately update their positions as I found them, because changing the positions would affect the weighted averages calculated later as it iterates through the vertices. Then, I iterated through each edge in the mesh and found the positions of the new vertices that will appear after the edges are split. These new positions are calculated by using a weighted average of the positions of the vertices in the two triangles that share the original edge. These values are stored until the actual splitting is completed. Now that all of the new vertex positions are known, every edge is split. To do this, I iterated through each edge and called my edge split function from task 5. One important thing about this step is making sure that only the edges in the original mesh get split. After splitting the first edge, three new edges are made and placed into the mesh. These should not be split again, so I marked them as new (as well as the new vertex) and made sure to only split old edges (connects two old vertices). Next, some of the edges need to be flipped. I iterated through each edge and only flipped them if it was a new edge that connected an old vertex to a new vertex. All other edges were not changed. Finally, I iterated through each vertex and updated their position to what was calculated in the beginning (both the updated positions of preexisting vertices as well as the positions of newly generated vertices). </p>
+		<p>Here is an example (upsampling a cube):</p>
+
+		<img src="./images/p6_1.PNG">
+		<img src="./images/p6_2.PNG">
+		<img src="./images/p6_3.PNG">
+		<img src="./images/p6_4.PNG">
+		<img src="./images/p6_4_2.PNG">
+
+		<p>One thing that is immediately noticable is that the corners stay sticking out. When using loop subdivision, all of the sharp corners and edges somewhat maintain their location. By splitting some of the edges prior to beginning the upsampling, you can reduce this effect. Having more connections to the corners pulls them in farther.</p>
+		<p>Here is the same cube after I manually split some of the edges:</p>
+
+		<img src="./images/p6_5.PNG">
+
+		<p>This resulted in a much better sphere than before. Here is the upsampled version of this cube:</p>
+
+		<img src="./images/p6_6.PNG">
+
+		<p>Another thing that's noticable from the first cube being upsampled is that it isn't symmetrical. To remove this, I split and then flipped some of the edges prior to upsampling. In doing so, the cube was completely symmetrical before upsampling, which makes it maintain the symmetry much more. This wasn't the case before. Also, adding a vertex on each edge of the main cube helped keep it more symmetrical. Without these vertices, there aren't very many edges on the cube, so when you upsample, it does them sequentially, causing a noticable differnece. By increasing the number of edges prior to upsampling, when they are split sequentially, it still isn't completely symmetrical, but it's significantly less noticable. In other words, the size of each part is smaller so the asymmetrical differences are smaller.</p>
+		<p>Here is the same cube after I manually split and then flipped some of the edges:</p>
+
+		<img src="./images/p6_7.PNG">
+
+		<p>This resulted in a significantly more symmetrical cube. Here is the upsampled version of this cube:</p>
+
+		<img src="./images/p6_8.PNG">
 		
 	</body>
 </html>
