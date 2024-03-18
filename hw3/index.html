@@ -144,7 +144,12 @@
 		<img src="./images/p4bunny1024m5f.png">
 		<p>It is clear that increasing the number of bounces makes the entire room lighter. The largest effects occur on the ceiling and the shadows of the bunny, which are almost completely illuminated. The largest difference happens between bounce 1 and bounce 2. And by the time you are at bounce 4, increasing it to 5 has a very little effect.</p>
 
-		<p>B6</p>
+		<p>Here are some examples with russian roulette on. Unfortunately, I didn't have enough time to render all of these, but I generated one with a max level of 0 and one with 3. I wish I had more time to finish this last bit of the project; I was visitng grad schools last week...</p>
+
+		<p>Here is max level 0:</p>
+		<img src="./images/s0.png">
+		<p>Here is max level 3:</p>
+		<img src="./images/s1.png">
 
 		<p>In this set of images, I used 4 light rays per light area. For each sequential picture I increased the number of samples per pixel, however.</p>
 
@@ -166,7 +171,10 @@
 		
 		<p><b><u>Part 5:</u></b></p>
 
-		
+		<p>Utilizing adaptive sampling allows us to make the rendering process much more efficient. Basically, we adjust the number of samples per pixel depending on if it has converged enough to it's true value. As a result, areas with not much change over time can be "skipped" after a few iterations, while more complex areas that have a lot of noise use the maximum number of samples per pixel.</p>
+		<p>To do this, I found the sum of the illuminance value and illuminace variance value after each iteration. I don't check for converge in every iteration; I created a variable that allows me to check every n iterations. At this point, I calculate the mean and variance of illumanice. Next, i divide the standard deviation by the square root of the number of samples and multiply it by a constant. If this output value is less than or equal to a user inputted maxtolerance value times the mean, then I break early, and stop making samples for that pixel. I now average the total color by the real number of samples taken, not the max value.</p>
+
+		<p></p>
 		
 	</body>
 </html>
