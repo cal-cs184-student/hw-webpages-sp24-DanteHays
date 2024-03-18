@@ -12,7 +12,7 @@
 
 		<p>To implement my ray-intersection algorithm, I used the Moller Trumbore algorithm. The input is the ray and a triangle primitive (the verticies are given). First, two edges of the triangle are found. Then, the vector from the origin of the ray to the common vertex in the 2 edges are found (Let's call this S). Then, the direction of the ray is cross producted with one of the edges. Then, S is cross producted with the other edge. After that, the result of this is dotted with the same edge, it's also dotted with the direction of the ray, and the result of the previous cross product is dotted with S. Once this is done, each of those three results are divided by the result of the first cross product and the first edge. This gives us t (the amount of "time" to intersection), b_1 (barycentric coordinate of where in the triangle it intersects), and b_2 (barycentric coordinate, as well). Now that two barycentric coordinates are found, we can find the third. As a result, the exact hit point in the triangle, as well as the normal at the hit point, can be found using the barycentric coordinates. This algorithm is a very clever way of combining basic trigonometry with barycentric coordinates to give us the outputs we desire in the most efficient way possible.</p>
 
-		<p>Here are some images that use normal shading from the ray-triangle and ray-sphere intersection algorithms.</p>
+		<p>Here are some images that use normal shading from the ray-triangle and ray-sphere intersection algorithms, as well as the generate ray and pixel sample algorithms.</p>
 
 		<p>Here is a banana:</p>
 		<img src="./images/p1banana.PNG">
