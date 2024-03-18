@@ -40,8 +40,8 @@
 
 		<p>In this part, I implemented direct lighting. To begin, I first created zero bounce lighting, where the light scource has a direct line to the camera. This is extremely easy, as you just have to return the emission from the primitive your ray intersects with.</p>
 		<p>The next part of direct lighting is one bounce, where a ray is sent to some place in the scene and the amount of light reflected off of that location into the camera is calculated. I added two different types of this. The first uses uniform hemisphere sampling. This function has an input ray and intersect primitive. First, I found the hit point on the primitive and determined the user inputted number of samples taken per ray. Then I iterated through each uniformly distributed random sample, which returns a vector to the sample location. I then create a new ray that originates at the reflective hit point and points in the direction of the sample. I then check if the ray interests with any primitive. If it does, I get the emission from the privitive. If this light points outwards towards the reflective point, I keep track of the amount of light. Then, that amount of light is scaled to take into account the amount of light lost due to the reflection angle (cos(angle from new ray to reflective primitive normal)), the probability of light actually pointing in the right direction (due to being a hemisphere light it's divided by 2*pi), and the bidirectional scattering distribution function (how much light interacts with the surface, which is 1/pi in this case). Then once all of these light values are added due to the number of random samples taken, the total is divided by the number of samples and returned, giving a good estimate of how much light is reflected at this point.</p>
-		<p>There is another type of direct lighting; importance sampling. This begins similarily to hemisphere sampling, but now I iterated through all of the lights in the scene. If the light is a point light source, then I sample it and create a new ray from the reflected point towards the intersection direction. Because I iterated through each light, instead of random direction, it is possible that there is another primitive in the way, however, blocking the light source from hitting the reflection point. To combat this, I check if the ray intersects with any primitive in a certain range (sampling the light returns the distance to it), and if it does, no light is added. However, if no primitive is hit, then there is a direct ray from the light source to the reflection point, so the value is scaled in the same way that was done in hemisphere sampling. This is only done if the light is a point source, so if the light is a hemisphere source, then I iterate through a user inputted number of samples, check to make sure there isn't another primitive in the way, and scale the light in the same way. In this case, the total light is averaged by the number of samples, unlike for point sources. After all of the light from point and hemisphere sources are added, I return.</p>
-		
+		<p>There is another type of direct lighting; importance sampling. This begins similarily to hemisphere sampling, but now I iterated through all of the lights in the scene. If the light is a point light source, then I sample it and create a new ray from the reflected point towards the intersection direction. Because I iterated through each light, instead of random direction, it is possible that there is another primitive in the way, however, blocking the light source from hitting the reflection point. To combat this, I check if the ray intersects with any primitive in a certain range (sampling the light returns the distance to it), and if it does, no light is added. However, if no primitive is hit, then there is a direct ray from the light source to the reflection point, so the value is scaled in the same way that was done in hemisphere sampling (although the probability changes). This is only done if the light is a point source, so if the light is a hemisphere source, then I iterate through a user inputted number of samples, check to make sure there isn't another primitive in the way, and scale the light in the same way. In this case, the total light is averaged by the number of samples, unlike for point sources. After all of the light from point and hemisphere sources are added, I return.</p>
+		<p>Throughout the entirety of this, I made sure to use the camera and object frames appropriately when calculating the amount of light reflected, new ray vector, etc...</p>
 		
 		<p>Here are some images showing both the hemisphere and importance lighting techniques:</p>
 
@@ -63,11 +63,11 @@
 		
 		<p>Here is a sphere scene that samples and generates 1 light ray at the reflection point.</p>
 		<img src="./images/p3l1.png">
-		<p>Here is a sphere scene that samples and generates 4 light ray at the reflection point.</p>
+		<p>Here is a sphere scene that samples and generates 4 light rays at the reflection point.</p>
 		<img src="./images/p3l4.png">
-		<p>Here is a sphere scene that samples and generates 16 light ray at the reflection point.</p>
+		<p>Here is a sphere scene that samples and generates 16 light rays at the reflection point.</p>
 		<img src="./images/p3l16.png">
-		<p>Here is a sphere scene that samples and generates 64 light ray at the reflection point.</p>
+		<p>Here is a sphere scene that samples and generates 64 light rays at the reflection point.</p>
 		<img src="./images/p3l64.png">
 		<p>It is fairly obvious that increaing the number of samples decreases the noise. Doing so allows intermediate gray colors to show up and blends the soft shadows, making the images much clearer. This is more noticeable on soft shadows (where a primitive is on the verge of sitting between the reflection point and light source), as the random sampling causes the shadow ray to intersect with a primitive sometimes, but not all. The shadows fully underneath a primitive don't change, as the shadow rays hit the primitive every time.</p>
 		
@@ -75,43 +75,63 @@
 				
 		<p><b><u>Part 4:</u></b></p>
 
-		<p>B1</p>
-
+		<p>In part four I implemented indirect lighting. In other words, there are >1 bounces, as apposed to a singular reflection point. To do this, I begin by calculating the hit point from the original camera ray and call my one_bounce_radiance function/s from part 3. This returns the amount of light from the first bounce. I then sample a new ray from the first bounce intersection point and create a new ray that originates at the intersection location and points towards the sampled angle. This new ray can now be though of as another "camera ray". I then test to make sure that this new ray intersects with another primitive in the scene. If it doesn't, I return the amount of light calculated so far (equivalent to one bounce). If it does hit a primitive, I recursively call the function, hence it being a "camera ray". We can then find the new amount of light reflected (bounce 2) and run through everything again. This recursion continues until either the user inputted maximum bounce is reached or the new "camera ray" doesn't intersect with anything. At this point the recursion stack unravels and the amount of light at each recursion "level" is scaled (in the same way as direct lighting) and added. It's not the exact same as direct lighting, however, because the light from the previous iteration is scaled each time, so the amount of light added from a distant bounce (5, for example) is significantly less than one from the first bounce. By recursively creating "camera rays" at the new intersection points, it's grabbing all of the light from multiple reflections simultaneously, otherwise known as indirect lighting.</p>
+		
 		<p>B2</p>
 
 		
 
-		<p>B3</p>
+		<p>Here is a sphere scene to compare only direct to only indirect illumination. Only indirect means that all of the bounces, except the first bounce, is added.</p>
 
+		<p>This is a sphere scene generated with only direct lighting.</p>
 		<img src="./images/p4spheredirect.png">
+		<p>This is a sphere scene generated with only indirect lighting.</p>
 		<img src="./images/p4sphereindirectONLY.png">
 
-		<p>B4</p>
+		<p>In this set of 5 pictures, I set the number of samples per pixel to 1024, giving us an extremeley high res and accurate picture, as the averages converge to a true, real-life value. However, each picture shows the amount of light added from a specific bounce, not the accumulated amount.</p>
 
+		<p>Here is a bunny generated showing the first bounce lighting</p>
 		<img src="./images/p4bunny1024m1.png">
+		<p>Here is a bunny generated showing the second bounce lighting</p>
 		<img src="./images/p4bunny1024m2.png">
+		<p>Here is a bunny generated showing the third bounce lighting</p>
 		<img src="./images/p4bunny1024m3.png">
+		<p>Here is a bunny generated showing the fourth bounce lighting</p>
 		<img src="./images/p4bunny1024m4.png">
+		<p>Here is a bunny generated showing the fifth bounce lighting</p>
 		<img src="./images/p4bunny1024m5.png">
+		<p>It is clear that the amount contributed at a specific bounce to a full indirect lighting generation decreases as the bounce increases. I find it interesting that the second bounce illuminates the darkest parts of the scene after the first bounce the most (The legs and chest area of the bunny that isn't in line with the light source at the top of the screen, for example). The third bounce, however, seems to just illuminate the entire scene a bit more and also focuses on the shadows below the bunny (presumably reflected from the rays that illuminate the legs and chest in the second bounce). This 2 extra bounces illuminate the whole scene, hence global illumination. The fourth and fifth bounces still add light, but it's much more general to the whole scene and is quite a bit less than the earlier bounces (although it mimicks the second and third bounce for the leg/chest and shadow areas, respectively).</p>
 
-		<p>B5</p>
+		<p>In this set of 5 pictures, I set the number of samples per pixel to 1024 as well. However, these differ significantly from the previous set as this shows global illumination fully in action. All of the bounce levels are added together, as opposed to showing each one individually.</p>
 
+		<p>Here is a bunny generated showing direct (1 bounce) illumination.</p>
 		<img src="./images/p4bunny1024m1f.png">
+		<p>Here is a bunny generated showing the first 2 bounces added together.</p>
 		<img src="./images/p4bunny1024m2f.png">
+		<p>Here is a bunny generated showing the first 3 bounces added together.</p>
 		<img src="./images/p4bunny1024m3f.png">
+		<p>Here is a bunny generated showing the first 4 bounces added together.</p>
 		<img src="./images/p4bunny1024m4f.png">
+		<p>Here is a bunny generated showing the first 5 bounces added together.</p>
 		<img src="./images/p4bunny1024m5f.png">
 
 		<p>B6</p>
 
-		<p>B7</p>
+		<p>In this set of images, I used 4 light rays per light area. For each sequental picture I increased the number of samples per pixel, however.</p>
 
+		<p>Here is a sphere scene using 1 sample per pixel.</p>
 		<img src="./images/p4spheres1.png">
+		<p>Here is a sphere scene using 2 samples per pixel.</p>
 		<img src="./images/p4spheres2.png">
+		<p>Here is a sphere scene using 4 samples per pixel.</p>
 		<img src="./images/p4spheres4.png">
+		<p>Here is a sphere scene using 8 samples per pixel.</p>
 		<img src="./images/p4spheres8.png">
+		<p>Here is a sphere scene using 16 samples per pixel.</p>
 		<img src="./images/p4spheres16.png">
+		<p>Here is a sphere scene using 64 samples per pixel.</p>
 		<img src="./images/p4spheres64.png">
+		<p>Here is a sphere scene using 1024 samples per pixel.</p>
 		<img src="./images/p4spheres1024.png">
 		
 		<p><b><u>Part 5:</u></b></p>
