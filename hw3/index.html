@@ -75,11 +75,13 @@
 				
 		<p><b><u>Part 4:</u></b></p>
 
-		<p>In part four I implemented indirect lighting. In other words, there are >1 bounces, as apposed to a singular reflection point. To do this, I begin by calculating the hit point from the original camera ray and call my one_bounce_radiance function/s from part 3. This returns the amount of light from the first bounce. I then sample a new ray from the first bounce intersection point and create a new ray that originates at the intersection location and points towards the sampled angle. This new ray can now be though of as another "camera ray". I then test to make sure that this new ray intersects with another primitive in the scene. If it doesn't, I return the amount of light calculated so far (equivalent to one bounce). If it does hit a primitive, I recursively call the function, hence it being a "camera ray". We can then find the new amount of light reflected (bounce 2) and run through everything again. This recursion continues until either the user inputted maximum bounce is reached or the new "camera ray" doesn't intersect with anything. At this point the recursion stack unravels and the amount of light at each recursion "level" is scaled (in the same way as direct lighting) and added. It's not the exact same as direct lighting, however, because the light from the previous iteration is scaled each time, so the amount of light added from a distant bounce (5, for example) is significantly less than one from the first bounce. By recursively creating "camera rays" at the new intersection points, it's grabbing all of the light from multiple reflections simultaneously, otherwise known as indirect lighting.</p>
+		<p>In part four I implemented indirect lighting. In other words, there are >1 bounces, as opposed to a singular reflection point. To do this, I begin by calculating the hit point from the original camera ray and call my one_bounce_radiance function/s from part 3. This returns the amount of light from the first bounce. I then sample a new ray from the first bounce intersection point and create a new ray that originates at the intersection location and points towards the sampled angle. This new ray can now be thought of as another "camera ray". I then test to make sure that this new ray intersects with another primitive in the scene. If it doesn't, I return the amount of light calculated so far (equivalent to one bounce). If it does hit a primitive, I recursively call the function, hence it being a "camera ray". We can then find the new amount of light reflected (bounce 2) and run through everything again. This recursion continues until either the user inputted maximum bounce is reached or the new "camera ray" doesn't intersect with anything. At this point the recursion stack unravels and the amount of light at each recursion "level" is scaled (in the same way as direct lighting) and added. It's not the exact same as direct lighting, however, because the light from the previous iteration is scaled each time, so the amount of light added from a distant bounce (5, for example) is significantly less than one from the first bounce. By recursively creating "camera rays" at the new intersection points, it's grabbing all of the light from multiple reflections simultaneously, otherwise known as indirect lighting or global illumination.</p>
 		
-		<p>B2</p>
+		<p>Here are some images rendered with full global illumination. I used 1024 samples per pixel.</p>
 
-		
+		<img src="./images/p4bunny1024m5f.png">
+		<img src="./images/p4spheres1024.png">
+		<img src="./images/gems.png">
 
 		<p>Here is a sphere scene to compare only direct to only indirect illumination. Only indirect means that all of the bounces, except the first bounce, is added.</p>
 
@@ -87,6 +89,7 @@
 		<img src="./images/p4spheredirect.png">
 		<p>This is a sphere scene generated with only indirect lighting.</p>
 		<img src="./images/p4sphereindirectONLY.png">
+		<p>In the direct only image, the bunny is very light and there are shadows underneath the bunny (which is what you would see if the room wasn't very reflective). Using only indirect illumination causes a very different picture (Note: My 8 year old laptop was overheating at this point so I only rendered bounce 2 and 3, I believe). For one, the ceiling is white (it was black in the direct picture). This is because the ceiling is parallel to the light source, so it can't receive any light in the first bounce. But once the second or third bounce is added, reflections off of the walls and bunny illuminate the ceiling. This also applies to the shadows below the bunny.</p>
 
 		<p>In this set of 5 pictures, I set the number of samples per pixel to 1024, giving us an extremeley high res and accurate picture, as the averages converge to a true, real-life value. However, each picture shows the amount of light added from a specific bounce, not the accumulated amount.</p>
 
@@ -114,10 +117,11 @@
 		<img src="./images/p4bunny1024m4f.png">
 		<p>Here is a bunny generated showing the first 5 bounces added together.</p>
 		<img src="./images/p4bunny1024m5f.png">
+		<p>It is clear that increasing the number of bounces makes the entire room lighter. The largest effects occur on the ceiling and the shadows of the bunny, which are almost completely illuminated. The largest difference happens between bounce 1 and bounce 2. And by the time you are at bounce 4, increasing it to 5 has a very little effect.</p>
 
 		<p>B6</p>
 
-		<p>In this set of images, I used 4 light rays per light area. For each sequental picture I increased the number of samples per pixel, however.</p>
+		<p>In this set of images, I used 4 light rays per light area. For each sequential picture I increased the number of samples per pixel, however.</p>
 
 		<p>Here is a sphere scene using 1 sample per pixel.</p>
 		<img src="./images/p4spheres1.png">
@@ -133,6 +137,7 @@
 		<img src="./images/p4spheres64.png">
 		<p>Here is a sphere scene using 1024 samples per pixel.</p>
 		<img src="./images/p4spheres1024.png">
+		<p>I really like this comparison. As the number of samples increases, the noise in the scene disappears significantly. This is due to the averaging causing the random samples at all bounces to converge to their true light values. At 64 samples per pixel, you have a decently rendered image, but it takes 1025 to reach an ideal state.</p>
 		
 		<p><b><u>Part 5:</u></b></p>
 
