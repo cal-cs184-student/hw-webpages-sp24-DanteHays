@@ -16,25 +16,41 @@
 		
 		<p><b><u>Part 2:</u></b></p>
 		
-		<p>B1</p>
+		<p>In part 2, I created a BVH class, which allows us to easily test where a ray intersect in a scene (log(n) instead of n). This consists of two main parts; the constructor and the intersect function.</p>
+		<p>The constructor begins by iterating through each primitive in the scene (held in a vector) and adds their respective bounding box into a singular bounding box. A node is made out of this bounding box. Then, I find the largest axis of the box and sort all of the primitives in the vector in terms of their centroids along said axis. Then, I find the midpoint of the box and recursively call the constructor twice, once from the start of the vector to the mid point and once from the mid point to the end of the vector. This continues until the number of primitives in the vector is below a certain threshold. At this point, a leaf node is made (actually holds the primitives), and the recursion goes back up a level, assigning the leaf node to either the right or left child node of the higher level non-leaf node. As a result, you a tree of nodes that allow the intersection point to be found in log(n) instead of n.</p>
+		<p>My heuristic for choosing the splitting point comes from sorting the primitives and then finding the middle point. This gives us the median primitive for splitting, making sure that the BVH tree is as equal as possible.
+		
+		<p>Here are some images that are complex enough that it would take an extremely long time to render without implementing the BVH construction and intersection algorithms.</p>
 
-		<p>B2</p>
-
+		<p>Here is a dragon.</p>
 		<img src="./images/p2dragon.PNG">
+		<p>Here is a statue.</p>
 		<img src="./images/p2cblucy.PNG">
+		<p>Here is Max Planck! I'm sure he would've wanted to see this :)</p>
 		<img src="./images/p2maxplanck.PNG">
 
-		<p>B3</p>
+		<p>Here are some moderately complex scenes. Next to each one, I included screenshots of how long they took to render both with and without BVH acceleration.</p>
 
+		<p>Here is a beast:</p>
 		<img src="./images/p2beast.PNG">
+		<p>This is how long it took without BVH:</p>
 		<img src="./images/p2beastslow.PNG">
+		<p>This is how long it tok with BVH:</p>
 		<img src="./images/p2beastfast.PNG">
+		<p>Here is a cow:</p>
 		<img src="./images/p2cow.PNG">
+		<p>This is how long it took without BVH:</p>
 		<img src="./images/p2cowslow.PNG">
+		<p>This is how long it tok with BVH:</p>
 		<img src="./images/p2cowfast.PNG">
+		<p>Here is a teapot</p>
 		<img src="./images/p2teapot.PNG">
+		<p>This is how long it took without BVH:</p>
 		<img src="./images/p2teapotslow.PNG">
+		<p>This is how long it tok with BVH:</p>
 		<img src="./images/p2teapotfast.PNG">
+
+		<p>The cow took roughly 100 seconds to render without BVH, but only .36 seconds to render with BVH. The teapot took roughly 36 seconds to render without BVH, but only .44 seconds to render with BVH. The beast took .4 seconds to render with BVH, but took several minutes to get to 1% rendered without BVH. However, for all three the construction of the BVH took slightly (.1 seconds-ish) longer to generate than without BVH. While the construction takes a little bit longer, the strength of the log(n) intersection algorithm due to the BVH class makes it obviously worth it. If we didn't construct this, the next parts (3, 4, 5) would have needed days to render a singular picture, at least.</p>
 		
 		<p><b><u>Part 3:</u></b></p>
 
