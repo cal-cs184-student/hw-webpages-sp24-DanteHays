@@ -7,10 +7,18 @@
 		<p>Description</p>
 
 		<p><b><u>Part 1:</u></b></p>
-		
-		
+
+		<p>In the later parts of this report, I will discuss raytracing. However, in order to do this, you first need to be able to generate rays and find intersections with primitives in the scene. To generate a ray, you begin with image coordinates. These are transformed into camera space, and a ray is made from the origin of the camera to this point. Then, the ray is transformed back into world space (needed for ray-tracing). The output camera ray intersects the image space, goes through, and hits whatever primitive is behind it. The next step needed as a precursor to ray tracing is generating pixel samples. To do this, I created a function that inputs a pixel's x and y coordinates. It then iterates through a predetermined number of samples and randomly adds a little bit to the x and y coordinates (without crossing into the next pixel). This is useful later to allow the entirety of the scene to be hit with rays, as opposed to very specific points. Once the new x and y coordinates are determined, I call the generate_ray function I just discussed. Once all of the rays have done whatever is needed of them, they are averaged by the number of samples and returned. The last prerequisite for ray-tracing is creating intersection algorithms for ray-triangle and ray-sphere interactions. Both of these algorithms return the normal at the intersection point and the amount of "time" for the ray to reach the intersection point.</p>
+
+		<p>To implement my ray-intersection algorithm, I used the Moller Trumbore algorithm. The input is the ray and a triangle primitive (the verticies are given). First, two edges of the triangle are found. Then, the vector from the origin of the ray to the common vertex in the 2 edges are found (Let's call this S). Then, the direction of the ray is cross producted with one of the edges. Then, S is cross producted with the other edge. After that, the result of this is dotted with the same edge, it's also dotted with the direction of the ray, and the result of the previous cross product is dotted with S. Once this is done, each of those three results are divided by the result of the first cross product and the first edge. This gives us t (the amount of "time" to intersection), b_1 (barycentric coordinate of where in the triangle it intersects), and b_2 (barycentric coordinate, as well). Now that two barycentric coordinates are found, we can find the third. As a result, the exact hit point in the triangle, as well as the normal at the hit point, can be found using the barycentric coordinates. This algorithm is a very clever way of combining basic trigonometry with barycentric coordinates to give us the outputs we desire in the most efficient way possible.</p>
+
+		<p>Here are some images that use normal shading from the ray-triangle and ray-sphere intersection algorithms.</p>
+
+		<p>Here is a banana:</p>
 		<img src="./images/p1banana.PNG">
+		<p>Here is an empty room:</p>
 		<img src="./images/p1cbempty.PNG">
+		<p>Someone put spheres in the room:</p>
 		<img src="./images/p1spheres.PNG">
 
 		
