@@ -174,7 +174,14 @@
 		<p>Utilizing adaptive sampling allows us to make the rendering process much more efficient. Basically, we adjust the number of samples per pixel depending on if it has converged enough to it's true value. As a result, areas with not much change over time can be "skipped" after a few iterations, while more complex areas that have a lot of noise use the maximum number of samples per pixel.</p>
 		<p>To do this, I found the sum of the illuminance value and illuminace variance value after each iteration. I don't check for converge in every iteration; I created a variable that allows me to check every n iterations. At this point, I calculate the mean and variance of illumanice. Next, i divide the standard deviation by the square root of the number of samples and multiply it by a constant. If this output value is less than or equal to a user inputted maxtolerance value times the mean, then I break early, and stop making samples for that pixel. I now average the total color by the real number of samples taken, not the max value.</p>
 
-		<p></p>
+		<p>Here is a bunny with adaptive sampling</p>
+		<img src="./images/bunny.png">
+		<p>Here is the bunnies rate of sampling</p>
+		<img src="./images/bunny_rate.png">
+		<p>Here is a sphere scene with adaptive sampling</p>\
+		<img src="./images/slol.png">
+		<p>Here is the sphere scene's rate of sampling</p>
+		<img src="./images/slol_rate.png">
 		
 	</body>
 </html>
